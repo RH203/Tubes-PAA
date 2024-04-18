@@ -20,9 +20,9 @@ Tugas Besar ini merupakan bagian dari Ujian Tengah Semester (UTS) untuk mata kul
     - **Implementasi Algoritma:** ?
 
 ### Author
-- **Raihan Firdaus - 1203222055**
-- **Irfan Yasin - 1203220158**
-- **Mario Achmad Taufik - 1203220125**
+- [**Raihan Firdaus - 1203222055**](https://github.com/RH203)
+- [**Irfan Yasin - 1203220158**]()
+- [**Mario Achmad Taufik - 1203220125**]()
 
 
 ### How to Use
