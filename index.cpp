@@ -5,6 +5,12 @@
 #include <map>
 using namespace std;
 
+
+
+// ======================================================================
+// PERTUKARAN COIN FUNCTION
+// ======================================================================
+
 // Fungsi untuk algoritma greedy
 void greedy(int amount, vector<int> &coins)
 {
@@ -108,12 +114,47 @@ void exchangeCoin()
     break;
   }
 }
+// ======================================================================
+// PERTUKARAN COIN END
+// ======================================================================
+
+
+
+// ======================================================================
+// JOB SCHEDULING INITIALIZATION
+// ======================================================================
+
+// Definisikan struktur untuk tugas
+struct Task {
+    int id;
+    int deadline;
+};
+
+// Fungsi perbandingan untuk mengurutkan tugas berdasarkan deadline dalam urutan non-menurun
+bool compare(Task a, Task b) {
+    return a.deadline < b.deadline;
+}
+
+
+// Function prototypes
+void jobSchedulingBruteForce();
+void jobSchedulingGreedy();
+void selectionSort(int arr[], int n);
+
+
+// ======================================================================
+// JOB SCHEDULING END
+// ======================================================================
+
+
 
 int main()
 {
   while (true)
   {
     int choice;
+    int chooseAlgorithm;
+
     cout << "Menu Utama:" << endl;
     cout << "1. Pertukaran Koin" << endl;
     cout << "2. Job Scheduling" << endl;
@@ -129,7 +170,18 @@ int main()
       exchangeCoin();
       break;
     case 2:
-      // TODO: Job schedule
+       cout << "1. Brute Force" << endl;
+            cout << "2. Greedy" << endl;
+            cout << "Pilih algoritma : "; 
+            cin >> chooseAlgorithm;
+
+            if (chooseAlgorithm == 1) {
+                jobSchedulingBruteForce();
+            } else if (chooseAlgorithm == 2) {
+                jobSchedulingGreedy();
+            } else {
+                cout << "Pilihan anda tidak di temukan!";
+            }
       break;
     case 3:
       // TODO: Knapsack
@@ -142,3 +194,99 @@ int main()
     }
   }
 }
+
+
+
+
+// ======================================================================
+// JOB SCHEDULING FUNCTION
+// ======================================================================
+
+// Brute Force implementation
+void jobSchedulingBruteForce() {
+    int jmlJadwal;
+    cout << "Masukkan jumlah jadwal : "; 
+    cin >> jmlJadwal;
+
+    // Deklarasi array untuk menyimpan job
+    int jobs[jmlJadwal];
+
+    for (int i = 0; i < jmlJadwal; i++) {
+        cout << "Masukkan job ke-" << i + 1 << " : "; 
+        cin >> jobs[i];
+    }
+
+    // Sorting array menggunakan Selection Sort
+    selectionSort(jobs, jmlJadwal);
+
+    // Menampilkan isi array setelah sorting
+    cout << "\nPrioritas Jadwal Pekerjaan : " << endl;
+    for (int i = 0; i < jmlJadwal; i++) {
+        cout << "Job : " << jobs[i] << endl;
+    }
+    cout << endl;
+}
+
+
+// Algoritma greedy untuk menyelesaikan masalah penjadwalan tugas tanpa mempertimbangkan profit
+void jobSchedulingGreedy() {
+    int n; // Jumlah tugas
+    cout << "Masukkan jumlah jadwal : ";
+    cin >> n;
+
+    // Membuat vektor untuk menyimpan tugas
+    vector<Task> tasks(n);
+
+    // Memasukkan detail setiap tugas
+    for (int i = 0; i < n; ++i) {
+        cout << "Masukkan job ke-" << i + 1 << " : ";
+        cin >> tasks[i].deadline;
+        tasks[i].id = i + 1; // Mengisi id tugas
+    }
+
+    // Mengurutkan tugas berdasarkan deadline dalam urutan non-menurun
+    sort(tasks.begin(), tasks.end(), compare);
+
+    // Inisialisasi array untuk menyimpan jadwal yang dipilih
+    vector<bool> slot(n, false);
+
+    // Memilih tugas dengan algoritma greedy
+    int scheduledTasks = 0;
+    cout << "Prioritas Jadwal Pekerjaan : ";
+    for (int i = 0; i < n; ++i) {
+        for (int j = min(n, tasks[i].deadline) - 1; j >= 0; --j) {
+            if (!slot[j]) {
+                cout << tasks[i].id << " ";
+                slot[j] = true;
+                scheduledTasks++;
+                break;
+            }
+        }
+    }
+    cout << endl;
+    cout << "Jumlah pekerjaan yang dijadwalkan : " << scheduledTasks << endl;
+}
+
+
+
+// Selection Sort implementation
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) {
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}
+
+
+// ======================================================================
+// JOB SCHEDULING END
+// ======================================================================
