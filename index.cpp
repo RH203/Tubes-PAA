@@ -3,6 +3,7 @@
 #include <climits>
 #include <algorithm>
 #include <map>
+#include "knapsack.h"
 using namespace std;
 
 // Fungsi untuk algoritma greedy
@@ -132,7 +133,7 @@ int main()
       // TODO: Job schedule
       break;
     case 3:
-      // TODO: Knapsack
+      run();
       break;
     case 4:
       return 0; // Keluar dari program
